@@ -23,9 +23,9 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPExcepti
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from visual_pipeline import VisualPipeline
-from audio_pipeline import AudioPipeline
-from fusion_layer import FusionLayer, SharedState
+from .visual_pipeline import VisualPipeline
+from .audio_pipeline import AudioPipeline
+from .fusion_layer import FusionLayer, SharedState
 
 import sqlite3
 
@@ -459,8 +459,8 @@ async def analyze_upload(file: UploadFile = File(...), topic: str = Form("")):
         f.write(content)
 
     try:
-        from audio_pipeline import AudioPipeline
-        from fusion_layer   import FusionLayer, SharedState
+        from .audio_pipeline import AudioPipeline
+        from .fusion_layer   import FusionLayer, SharedState
         ss   = SharedState()
         ap   = AudioPipeline(ss)
         fl   = FusionLayer(ss)
@@ -634,7 +634,7 @@ async def generate_questions_from_resume(file: UploadFile = File(None), text: st
             f"Resume Text:\n{content[:5000]}"
         )
 
-        from fusion_layer import NVIDIA_API_KEY
+        from .fusion_layer import NVIDIA_API_KEY
         
         headers = {
             "Authorization": f"Bearer {NVIDIA_API_KEY}",
@@ -713,7 +713,7 @@ async def interview_feedback(req: InterviewFeedbackRequest):
         if not req.transcript or len(req.transcript.strip()) < 10:
             return {"ok": False, "error": "Transcript too short to analyze."}
 
-        from fusion_layer import NVIDIA_API_KEY
+        from .fusion_layer import NVIDIA_API_KEY
         if not NVIDIA_API_KEY:
             return {"ok": False, "error": "No NVIDIA API key configured."}
 
@@ -959,7 +959,7 @@ async def practice_conciseness(req: ConciseFeedbackRequest):
     try:
         if not req.transcript or len(req.transcript.strip()) < 20:
             return {"ok": False, "error": "Transcript too short."}
-        from fusion_layer import NVIDIA_API_KEY
+        from .fusion_layer import NVIDIA_API_KEY
         if not NVIDIA_API_KEY:
             return {"ok": False, "error": "No API key configured."}
         topic_line = ("Topic: " + req.topic + "\n") if req.topic else ""
