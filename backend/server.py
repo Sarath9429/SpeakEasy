@@ -67,7 +67,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-FRONTEND_DIR = Path(__file__).parent  # same folder as server.py
+FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 app.mount(
     "/static",
     StaticFiles(directory=str(FRONTEND_DIR)),
