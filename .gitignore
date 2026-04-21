@@ -1,0 +1,19 @@
+# Environments
+sachin/
+__pycache__/
+*.pyc
+
+# Local Credentials
+rich-agency-*.json
+api_keys.json
+
+# Audio and Database
+recordings/
+*.wav
+*.webm
+*.db
+*.sqlite3
+
+# OS Files
+.DS_Store
+Thumbs.db

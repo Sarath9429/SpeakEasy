@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SynthSpeak – AI Presentation Coach</title>
+  <meta name="description" content="SynthSpeak is a real-time multimodal AI presentation coach." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+          <line x1="12" y1="19" x2="12" y2="23" />
+          <line x1="8" y1="23" x2="16" y2="23" />
+        </svg>
+      </div>
+      <span class="logo-text">SynthSpeak</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Collapse">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item-wrapper" id="practiceWrapper">
+        <a href="#" class="nav-item active" id="nav-practice" data-page="presentation">
+          <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" />
+            </svg></span>
+          <span class="nav-label">Practice</span>
+          <svg class="nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
+        <div class="nav-dropdown" id="practiceDropdown">
+          <div class="nav-drop-item" data-mode="roleplay">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            Roleplay
+          </div>
+          <div class="nav-drop-item" data-mode="presentation">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            Presentation
+          </div>
+          <div class="nav-drop-item" data-mode="analytics">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            Analytics
+          </div>
+          <div class="nav-drop-item" data-mode="interview">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            Interview
+          </div>
+          <div class="nav-drop-item" data-mode="upload">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            Upload
+          </div>
+        </div>
+      </div>
+      <a href="#" class="nav-item" id="nav-dashboard" data-page="dashboard">
+        <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg></span>
+        <span class="nav-label">Progress</span>
+      </a>
+      <a href="#" class="nav-item" id="nav-recordings" data-page="recordings">
+        <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="10 8 16 12 10 16 10 8" />
+          </svg></span>
+        <span class="nav-label">Recordings</span>
+      </a>
+      <a href="#" class="nav-item" id="nav-apikey" data-page="apikey">
+        <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+          </svg></span>
+        <span class="nav-label">API Key</span>
+      </a>
+      <a href="#" class="nav-item" id="nav-settings" data-page="settings">
+        <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+          </svg></span>
+        <span class="nav-label">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">S</div>
+        <div class="user-info">
+          <span class="user-name">Sarath S</span>
+          <span class="user-plan">Free Plan</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <main class="main-wrapper" id="mainWrapper">
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="back-btn hidden" id="backBtn" title="Back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Back
+        </button>
+        <h1 class="page-title" id="pageTitle">Practice</h1>
+        <div class="live-badge" id="liveBadge" style="display:none;">
+          <span class="live-dot"></span> LIVE
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="theme-toggle" id="themeToggleBtn" title="Toggle dark mode">
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="sun-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <div class="clock" id="clockDisplay">00:00:00</div>
+
+
+        <button class="icon-btn hidden" id="screenshotBtn" title="Screenshot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
+        <button class="share-btn hidden" id="shareBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+          </svg>
+          Share
+        </button>
+      </div>
+    </header>
+
+
+
+    <!-- PAGE: PRESENTATION PRACTICE -->
+    <div class="content-body hidden" id="pagePractice">
+      <section class="left-section">
+        <div class="video-card" id="videoCard">
+          <div class="video-container" id="videoContainer">
+            <!-- Live browser webcam feed — stream assigned by getUserMedia() in app.js -->
+            <video id="localVideo" autoplay muted playsinline
+              style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;"></video>
+            <canvas id="overlayCanvas" style="display:none;"></canvas>
+            <div class="video-overlay-tl">
+              <div class="status-chip" id="statusChip"><span class="status-dot" id="statusDot"></span><span
+                  id="statusLabel">IDLE</span></div>
+            </div>
+            <div class="video-overlay-tr">
+              <button class="icon-btn glass-btn" id="videoMenuBtn"><svg width="16" height="16" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="5" r="1" />
+                  <circle cx="12" cy="12" r="1" />
+                  <circle cx="12" cy="19" r="1" />
+                </svg></button>
+            </div>
+            <div class="video-overlay-bl">
+              <div class="lang-chip">🌐 EN</div>
+            </div>
+            <div class="video-overlay-br">
+              <div class="name-chip" id="nameChip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg> Sarath S</div>
+            </div>
+            <div class="no-cam-placeholder" id="noCamPlaceholder">
+              <div class="no-cam-inner">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="23 7 16 12 23 17 23 7" />
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                </svg>
+                <p>Camera not started</p><span>Click <strong>Start</strong> to begin</span>
+              </div>
+            </div>
+          </div>
+          <div class="controls-bar">
+            <button class="ctrl-icon-btn" id="settingsCtrlBtn" title="Settings"><svg width="18" height="18"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+              </svg></button>
+            <button class="ctrl-icon-btn" id="topicCtrlBtn" title="Set topic"><svg width="18" height="18"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg></button>
+            <button class="start-btn" id="startBtn"><span class="start-btn-dot"></span> Start</button>
+            <button class="ctrl-icon-btn" id="helpCtrlBtn" title="Help [H]"><svg width="18" height="18"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg></button>
+          </div>
+        </div>
+
+        <!-- Audio Waveform Visualizer -->
+        <div class="audio-viz-bar" id="audioVizBar">
+          <span class="audio-viz-label">MIC</span>
+          <div class="audio-viz-bars" id="audioVizBars">
+            <span class="avb"></span><span class="avb"></span><span class="avb"></span>
+            <span class="avb"></span><span class="avb"></span><span class="avb"></span>
+            <span class="avb"></span><span class="avb"></span><span class="avb"></span>
+            <span class="avb"></span><span class="avb"></span><span class="avb"></span>
+          </div>
+          <span class="audio-viz-level" id="audioVizLevel">—</span>
+        </div>
+
+        <!-- Manual Topic Entry — always visible -->
+        <div class="manual-entry-bar" id="manualEntryBar">
+          <div class="manual-entry-inner">
+            <span class="manual-entry-label">✎ Topic:</span>
+            <input type="text" id="manualTopicInput" class="manual-input" placeholder="Enter your presentation topic…"
+              maxlength="120" />
+            <button class="confirm-btn success" id="applyManualBtn">Apply</button>
+          </div>
+        </div>
+
+        <!-- Topic display pill -->
+        <div class="topic-display-card" id="topicContent" style="display:none;margin-top:0;">
+          <div class="topic-status-row">
+            <span class="topic-status-dot" id="topicStatusDot"></span>
+            <span class="topic-status-text" id="topicStatusText">No topic confirmed yet</span>
+          </div>
+          <div class="topic-text" id="confirmedTopicDisplay">—</div>
+          <div class="topic-hint">Click the ✎ button to change topic.</div>
+        </div>
+      </section>
+
+      <aside class="right-panel" id="rightPanel">
+        <div class="panel-tabs">
+          <button class="ptab active" id="ptabCoaching"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg> Coaching</button>
+          <button class="ptab" id="ptabAnalytics"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg> Analytics</button>
+        </div>
+        <div class="panel-content" id="panelCoaching">
+          <div class="metric-card">
+            <div class="card-header">
+              <div class="card-title">Relevance Score</div>
+              <div class="card-badge" id="relevanceBadge">—</div>
+            </div>
+            <div class="relevance-status" id="relevanceStatus"><span class="relevance-waiting"><span
+                  class="pulsing-dot"></span> Waiting for topic…</span></div>
+            <div class="progress-row" id="relevanceProgressRow">
+              <div class="progress-track">
+                <div class="progress-fill" id="relevanceBar" style="width:0%"></div>
+              </div><span class="progress-label" id="relevancePercent">0%</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="card-header">
+              <div class="card-title">Speech Quality</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-label-row"><span class="metric-label">Filler Words</span><span class="metric-value"
+                  id="fillerValue">0 total</span></div>
+              <div class="pos-filler-list" id="posFillerBreakdown">
+                <span class="pos-filler-empty">No fillers detected yet</span>
+              </div>
+            </div>
+
+            <div class="metric-row">
+              <div class="metric-label-row"><span class="metric-label">Long Pauses</span><span class="metric-value"
+                  id="pauseValue">0 pauses</span></div>
+              <div class="pause-chips" id="pauseChips"></div>
+              <div class="pause-pos-row" id="pausePosRow" style="display:none;">
+                <span class="pause-pos-label">Paused after:</span>
+                <span class="pause-pos-chip" id="pausePosChip">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="card-header">
+              <div class="card-title">Body Language</div>
+            </div>
+            <div class="body-metric-row">
+              <div class="bm-label-row"><span class="bm-dot" id="eyeDot"></span><span class="bm-label">Eye
+                  Contact</span><span class="bm-value" id="eyeValue">—</span></div>
+              <div class="progress-track sm">
+                <div class="progress-fill" id="eyeBar" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="body-metric-row">
+              <div class="bm-label-row"><span class="bm-dot" id="postureDot"></span><span
+                  class="bm-label">Posture</span><span class="bm-value" id="postureValue">—</span></div>
+              <div class="progress-track sm">
+                <div class="progress-fill" id="postureBar" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="body-metric-row no-bar">
+              <div class="bm-label-row"><span class="bm-dot" id="headDot"></span><span class="bm-label">Head
+                  Orientation</span><span class="bm-value" id="headValue">—</span></div>
+            </div>
+            <div class="body-metric-row no-bar">
+              <div class="bm-label-row"><span class="bm-dot neutral-dot"></span><span class="bm-label">Hand
+                  Gesture</span><span class="bm-value" id="handValue">—</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="panel-content hidden" id="panelAnalytics">
+          <!-- Live Annotated Feed -->
+          <div class="metric-card annot-feed-card">
+            <div class="card-header">
+              <div class="card-title"><span class="card-icon">🎤</span> Live Annotated Feed</div>
+              <button class="copy-btn" id="copyAnnotFeedBtn" style="font-size:11px;padding:4px 9px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg> Copy
+              </button>
+            </div>
+            <!-- Legend -->
+            <div class="annot-legend">
+              <span class="legend-item"><span class="legend-swatch filler-swatch"></span>Filler</span>
+              <span class="legend-item"><span class="legend-swatch pause-swatch"></span>Pause</span>
+            </div>
+            <div class="annot-feed-content" id="annotFeedContent">
+              <div class="annot-system-msg">Click <strong>Start</strong> to begin — annotated speech will appear here.
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Stats -->
+          <div class="metric-card">
+            <div class="card-header">
+              <div class="card-title"><span class="card-icon">📊</span> Session Stats</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell">
+                <div class="stat-value" id="statDuration">0:00</div>
+                <div class="stat-label">Duration</div>
+              </div>
+              <div class="stat-cell">
+                <div class="stat-value" id="statWords">0</div>
+                <div class="stat-label">Words</div>
+              </div>
+              <div class="stat-cell">
+                <div class="stat-value" id="statFillers">0</div>
+                <div class="stat-label">Fillers</div>
+              </div>
+              <div class="stat-cell">
+                <div class="stat-value" id="statPauses">0</div>
+                <div class="stat-label">Pauses</div>
+              </div>
+              <div class="stat-cell">
+                <div class="stat-value" id="statWPM">—</div>
+                <div class="stat-label">WPM</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-card" id="concisenessCard">
+            <div class="card-header">
+              <div class="card-title"><span class="card-icon">💡</span> Conciseness</div>
+            </div>
+            <div id="concisenessContent">
+              <div class="conciseness-placeholder">
+                <span style="color:var(--text-muted);font-size:12.5px;">Complete a session to get AI coaching on how you
+                  could speak more concisely.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- PAGE: INTERVIEW -->
+    <div class="content-body hidden" id="pageInterview">
+      <div class="iv2-layout">
+
+        <!-- LEFT COLUMN: Setup -->
+        <div class="iv2-left">
+
+          <!-- Tabs -->
+          <div class="iv2-tabs">
+            <button class="iv2-tab active" id="iv2TabSetup">Setup Interview</button>
+            <button class="iv2-tab" id="iv2TabQuestions">Practice Questions</button>
+          </div>
+
+          <!-- Setup tab content -->
+          <div id="iv2SetupContent">
+
+            <!-- Interview type dropdown -->
+            <div class="iv2-section">
+              <label class="iv2-label">Interview Type</label>
+              <div class="iv2-select-wrap">
+                <select class="iv2-select" id="iv2InterviewType">
+                  <option value="general">General Interview</option>
+                  <option value="technical">Technical Interview</option>
+                  <option value="behavioral">Behavioural Interview</option>
+                  <option value="hr">HR Round</option>
+                  <option value="case">Case Study Interview</option>
+                </select>
+                <svg class="iv2-select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Interviewer card -->
+            <div class="iv2-section">
+              <label class="iv2-label">Interviewer</label>
+              <div class="iv2-interviewer-card">
+                <div class="iv2-avatar" id="iv2AvatarEl">A</div>
+                <div class="iv2-interviewer-info">
+                  <div class="iv2-interviewer-name" id="iv2InterviewerName">AI Interviewer</div>
+                  <div class="iv2-interviewer-role" id="iv2InterviewerRole">Hiring Manager</div>
+                </div>
+                <span class="iv2-tone-badge friendly" id="iv2ToneBadge">FRIENDLY</span>
+                <div class="iv2-select-wrap" style="flex:0 0 auto;min-width:0;border:none;background:none;padding:0;">
+                  <select class="iv2-select" id="iv2ToneSelect"
+                    style="font-size:11px;padding:4px 24px 4px 8px;border-radius:100px;background:rgba(249,115,22,0.1);border-color:var(--accent-border);color:var(--accent);">
+                    <option value="friendly">Friendly</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="strict">Strict</option>
+                  </select>
+                  <svg class="iv2-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Role & Company -->
+            <div class="iv2-two-col">
+              <div class="iv2-section">
+                <label class="iv2-label">Role</label>
+                <div class="iv2-search-input">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" id="iv2RoleInput" placeholder='Type any role (e.g. "CEO") or...' />
+                </div>
+              </div>
+              <div class="iv2-section">
+                <label class="iv2-label">Company</label>
+                <div class="iv2-search-input">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" id="iv2CompanyInput" placeholder="Type any company or select from..." />
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="iv2-section">
+              <label class="iv2-label">DESCRIPTION</label>
+              <p class="iv2-desc-text" id="iv2Description">Interview evaluating soft skills like communication,
+                teamwork, and cultural fit with the organisation.</p>
+            </div>
+
+            <!-- Rubric -->
+            <div class="iv2-section">
+              <label class="iv2-label">RUBRIC</label>
+              <div class="iv2-rubric-list" id="iv2RubricList">
+                <div class="iv2-rubric-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <div>
+                    <div class="iv2-rubric-title">Actively listen</div>
+                    <div class="iv2-rubric-hint">Demonstrate active listening by responding thoughtfully and
+                      acknowledging key points.</div>
+                  </div>
+                </div>
+                <div class="iv2-rubric-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <div>
+                    <div class="iv2-rubric-title">Use the STAR method</div>
+                    <div class="iv2-rubric-hint">Demonstrate good interview skills through the effective use of the STAR
+                      Method.</div>
+                  </div>
+                </div>
+                <div class="iv2-rubric-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <div>
+                    <div class="iv2-rubric-title">Clear articulation</div>
+                    <div class="iv2-rubric-hint">Speak clearly with appropriate pace and minimal filler words.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="iv2-or-divider"><span>OR</span></div>
+
+            <!-- Resume upload -->
+            <button class="iv2-jd-btn" id="iv2JDBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+              Upload Resume for Tailored Questions
+            </button>
+
+          </div>
+
+          <!-- Practice Questions tab -->
+          <div id="iv2QuestionsContent" class="hidden">
+            <div class="iv2-section">
+              <label class="iv2-label">QUESTION SET</label>
+              <div class="iv2-q-list-setup" id="iv2SetupQList">
+                <div class="iv2-sq-item"><span class="iv2-sq-num">1</span><span>Tell me about yourself and your
+                    background.</span></div>
+                <div class="iv2-sq-item"><span class="iv2-sq-num">2</span><span>What are your greatest strengths?</span>
+                </div>
+                <div class="iv2-sq-item"><span class="iv2-sq-num">3</span><span>Describe a challenging project and how
+                    you handled it.</span></div>
+                <div class="iv2-sq-item"><span class="iv2-sq-num">4</span><span>Why do you want to work at our
+                    company?</span></div>
+                <div class="iv2-sq-item"><span class="iv2-sq-num">5</span><span>Where do you see yourself in 5
+                    years?</span></div>
+              </div>
+              <button class="iv2-jd-btn" id="iv2AddQBtn" style="margin-top:12px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Add Custom Questions
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /iv2-left -->
+
+        <!-- RIGHT COLUMN: Camera permission + Start -->
+        <div class="iv2-right">
+
+          <!-- Camera/Mic grant -->
+          <div class="iv2-cam-card" id="iv2CamCard">
+            <p class="iv2-cam-title">Grant SynthSpeak camera and microphone access</p>
+            <div class="iv2-cam-icons">
+              <div class="iv2-cam-icon-wrap denied" id="iv2CamIcon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polygon points="23 7 16 12 23 17 23 7" />
+                  <rect x="1" y="5" width="15" height="14" rx="2" />
+                  <line x1="2" y1="2" x2="22" y2="22" stroke-width="1.8" />
+                </svg>
+              </div>
+              <div class="iv2-cam-icon-wrap denied" id="iv2MicIcon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="23" />
+                  <line x1="8" y1="23" x2="16" y2="23" />
+                  <line x1="2" y1="2" x2="22" y2="22" stroke-width="1.8" />
+                </svg>
+              </div>
+            </div>
+            <button class="iv2-allow-btn" id="iv2AllowBtn">Allow access</button>
+            <a href="#" class="iv2-troubleshoot-link">Troubleshooting guide</a>
+          </div>
+
+          <!-- Live video preview (hidden until access granted) -->
+          <div class="iv2-cam-preview hidden" id="iv2CamPreview">
+            <video id="iv2VideoEl" autoplay muted playsinline class="iv2-video"></video>
+            <div class="iv2-cam-granted-label">
+              <span class="iv2-cam-green-dot"></span> Camera & Mic Active
+            </div>
+          </div>
+
+          <!-- Start controls bar -->
+          <div class="iv2-controls-bar">
+            <button class="iv2-ctrl-icon" id="iv2CtrlSettings" title="Settings">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+              </svg>
+            </button>
+            <button class="iv2-ctrl-icon" id="iv2CtrlScreen" title="Screen share">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M8 21h8M12 17v4" />
+              </svg>
+            </button>
+            <button class="iv2-ctrl-icon" id="iv2CtrlFullscreen" title="Fullscreen">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+              </svg>
+            </button>
+            <button class="iv2-start-btn" id="iv2StartSessionBtn">
+              <span class="start-btn-dot"></span> Start
+            </button>
+          </div>
+
+          <!-- Live session overlay (shown after start) -->
+          <div class="iv2-live-panel hidden" id="iv2LivePanel">
+
+            <!-- Current question -->
+            <div class="iv2-cur-q-card" id="iv2CurQCard">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span class="iq-badge" id="iv2CurBadge"
+                  style="background:rgba(99,102,241,0.12);color:#6366f1;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;">Q
+                  1 / 5</span>
+                <span class="iv2-q-timer" id="iv2QTimer">2:00</span>
+              </div>
+              <div class="iv2-cur-q-text" id="iv2CurQText">—</div>
+              <div class="iv2-q-progress">
+                <div class="iv2-q-progress-fill" id="iv2QFill" style="width:0%"></div>
+              </div>
+              <div style="display:flex;gap:6px;margin-top:10px;">
+                <button class="confirm-btn neutral" id="iv2SkipBtn" style="flex:1;">⏭ Skip</button>
+                <button class="confirm-btn success" id="iv2NextBtn" style="flex:1;">Next →</button>
+              </div>
+            </div>
+            <!-- Transcript -->
+            <div class="transcript-panel" style="flex:1;min-height:120px;">
+              <div class="transcript-header">
+                <div class="transcript-tabs"><button class="ttab active">Live Response</button></div>
+              </div>
+              <div class="transcript-content" id="iv2TranscriptContent">
+                <div class="transcript-line system"><span class="tl-time">—</span><span class="tl-text">Your spoken
+                    response will appear here…</span></div>
+              </div>
+            </div>
+            <!-- Report -->
+            <div class="api-card hidden" id="iv2ReportCard" style="padding:14px;">
+              <div class="card-header" style="margin-bottom:10px;">
+                <div class="card-title"><span class="card-icon">📊</span> Session Report</div>
+              </div>
+              <div id="iv2ReportContent" class="iv-report-content"></div>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <button class="start-btn" id="iv2SendReportBtn"
+                  style="flex:1;justify-content:center;font-size:12px;padding:8px 12px;">📧 Send to Company</button>
+                <button class="confirm-btn neutral" id="iv2DownloadBtn">⬇</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /iv2-right -->
+      </div><!-- /iv2-layout -->
+    </div><!-- /pageInterview -->
+
+    <!-- PAGE: RECORDINGS -->
+    <div class="content-body page-fullwidth hidden" id="pageRecordings">
+      <div class="full-page-content">
+        <div class="page-section-header">
+          <div>
+            <h2 class="section-title">🎙️ Session Recordings</h2>
+            <p class="section-subtitle">All your practice sessions saved with timestamps, playback and scoring.</p>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div class="search-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input type="text" id="recSearchInput" placeholder="Search recordings…" />
+            </div>
+            <button class="refresh-btn" id="refreshRecordingsBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="rec-stats-bar">
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="recStatCount">0</div>
+            <div class="rec-stat-label">Total Sessions</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="recStatDuration">0m</div>
+            <div class="rec-stat-label">Total Time</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="recStatAvgScore">—</div>
+            <div class="rec-stat-label">Avg Score</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="recStatType">—</div>
+            <div class="rec-stat-label">Last Type</div>
+          </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="rec-filter-tabs" id="recFilterTabs">
+          <button class="rec-ftab active" data-filter="all">All</button>
+          <button class="rec-ftab" data-filter="presentation">Presentation</button>
+          <button class="rec-ftab" data-filter="interview">Interview</button>
+          <button class="rec-ftab" data-filter="roleplay">Roleplay</button>
+        </div>
+
+        <!-- Upload & Analyze zone -->
+        <div class="upload-zone-section">
+          <h3 class="upload-zone-heading">🔬 Analyze Local Recording</h3>
+          <p class="upload-zone-subtext">Upload a <strong>.wav</strong> or <strong>.mp3</strong> file and enter the
+            topic to get a retroactive Relevance Score and Speech Quality report.</p>
+          <div class="upload-controls">
+            <div id="uploadZone" class="upload-drop-zone">
+              <input type="file" id="uploadFileInput" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none;" />
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <span id="uploadZoneLabel">Click or drag a .wav / .mp3 file here</span>
+            </div>
+            <div class="upload-topic-row">
+              <input type="text" id="uploadTopicInput" class="manual-input"
+                placeholder="Topic name (e.g. Machine Learning)" />
+              <button id="analyzeUploadBtn" class="start-btn" style="white-space:nowrap;padding:10px 18px;">🔍
+                Analyze</button>
+            </div>
+          </div>
+          <div id="uploadResult"></div>
+        </div>
+
+        <div id="recordingsList" class="recordings-list">
+          <div class="empty-state" id="recordingsEmpty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="10 8 16 12 10 16 10 8" />
+            </svg>
+            <p>No recordings yet</p>
+            <span>Start a Practice session to generate audio recordings.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PAGE: DASHBOARD -->
+    <div class="content-body page-fullwidth hidden" id="pageDashboard">
+      <div class="full-page-content">
+        <div class="page-section-header">
+          <div>
+            <h2 class="section-title">📊 Progress Tracking</h2>
+            <p class="section-subtitle">Track your performance and improvements over time.</p>
+          </div>
+        </div>
+
+        <div class="rec-stats-bar">
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="dashTotalSessions">0</div>
+            <div class="rec-stat-label">Total Sessions</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="dashAvgOverall" style="color:var(--accent);">0%</div>
+            <div class="rec-stat-label">Avg Overall Score</div>
+          </div>
+        </div>
+
+        <div class="api-card" style="margin-top:20px; padding: 20px;">
+          <h3 class="api-card-title">Score Progression</h3>
+          <div style="height: 300px; width: 100%;">
+            <canvas id="progressChart"></canvas>
+          </div>
+        </div>
+
+        <div class="api-card" style="margin-top:20px;">
+          <h3 class="api-card-title">Session History</h3>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:14px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border-color);">
+                  <th style="padding:10px;">Date</th>
+                  <th style="padding:10px;">Type</th>
+                  <th style="padding:10px;">Overall</th>
+                  <th style="padding:10px;">Relevance</th>
+                  <th style="padding:10px;">Speech</th>
+                  <th style="padding:10px;">Body Lang</th>
+                  <th style="padding:10px;">Duration</th>
+                </tr>
+              </thead>
+              <tbody id="sessionHistoryTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: API KEY -->
+    <div class="content-body page-fullwidth hidden" id="pageApikey">
+      <div class="full-page-content">
+        <div class="page-section-header">
+          <div>
+            <h2 class="section-title">🔑 API Key Management</h2>
+            <p class="section-subtitle">Manage API access for companies using SynthSpeak to assess candidates.</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="rec-stats-bar">
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="apiStatKeys">0</div>
+            <div class="rec-stat-label">Active Keys</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="apiStatCalls">0</div>
+            <div class="rec-stat-label">Total API Calls</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" id="apiStatCompanies">0</div>
+            <div class="rec-stat-label">Companies</div>
+          </div>
+          <div class="rec-stat-card">
+            <div class="rec-stat-val" style="color:var(--green);">Active</div>
+            <div class="rec-stat-label">Status</div>
+          </div>
+        </div>
+
+        <div class="api-two-col">
+          <!-- LEFT: Generate -->
+          <div class="api-card">
+            <h3 class="api-card-title">Generate an API Key</h3>
+            <p class="api-card-desc">Enter your company details to receive a unique API key for real-time candidate
+              assessment.</p>
+            <div class="api-form">
+              <label class="api-label">Company Name</label>
+              <input type="text" id="apiCompanyInput" class="manual-input" placeholder="Acme Corp" />
+              <label class="api-label" style="margin-top:10px;">Contact Email</label>
+              <input type="email" id="apiEmailInput" class="manual-input" placeholder="hr@acme.com" />
+              <label class="api-label" style="margin-top:10px;">Use Case</label>
+              <select id="apiUseCaseInput" class="manual-input" style="cursor:pointer;">
+                <option value="hiring">Candidate Assessment / Hiring</option>
+                <option value="training">Internal Training</option>
+                <option value="coaching">Coaching Platform</option>
+                <option value="other">Other</option>
+              </select>
+              <button class="start-btn" id="generateApiKeyBtn"
+                style="width:100%;justify-content:center;margin-top:14px;">
+                <span class="start-btn-dot"></span> Generate API Key
+              </button>
+            </div>
+            <div class="api-key-result hidden" id="apiKeyResult">
+              <label class="api-label">Your API Key</label>
+              <div class="api-key-box">
+                <code id="generatedApiKey">—</code>
+                <button class="copy-btn" id="copyApiKeyBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg> Copy</button>
+              </div>
+              <p class="api-key-warn">⚠️ Save this key now — it won't be shown again.</p>
+            </div>
+          </div>
+
+          <!-- RIGHT: Docs -->
+          <div class="api-card">
+            <h3 class="api-card-title">How to Use the API</h3>
+            <p class="api-card-desc">Call the endpoint below while a SynthSpeak session is active to get live candidate
+              metrics.</p>
+            <label class="api-label">Endpoint</label>
+            <div class="api-endpoint-box"><code>POST http://your-server:8000/api/analyze</code></div>
+            <label class="api-label" style="margin-top:14px;">Request (curl)</label>
+            <pre class="api-code-block">curl -X POST http://localhost:8000/api/analyze \
+  -H "Authorization: Bearer ss_your_api_key"</pre>
+            <label class="api-label" style="margin-top:14px;">Response (JSON)</label>
+            <pre class="api-code-block">{
+  "metrics": {
+    "similarity": 0.81,
+    "is_on_topic": true,
+    "eye_contact_percentage": 74.3,
+    "posture_score": 88.0,
+    "filler_word_count": 3,
+    "total_word_count": 120,
+    "transcription": "Today I'll show you...",
+    "retrieved_at": "2026-03-10T18:00:00"
+  }
+}</pre>
+            <label class="api-label" style="margin-top:14px;">Interview Report Endpoint</label>
+            <pre class="api-code-block">GET /api/interview-report/{session_id}
+Authorization: Bearer ss_your_api_key
+# Returns full candidate report with per-question scores</pre>
+          </div>
+        </div>
+
+        <!-- Issued keys table -->
+        <div class="api-card" style="margin-top:20px;" id="apiKeysTableCard">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h3 class="api-card-title" style="margin:0;">Issued Keys</h3>
+            <button class="refresh-btn" id="refreshApiKeysBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
+              Refresh
+            </button>
+          </div>
+          <div id="apiKeysTable"><em style="color:var(--text-muted);font-size:13px;">Loading…</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: SETTINGS -->
+    <div class="content-body page-fullwidth hidden" id="pageSettings">
+      <div class="full-page-content">
+        <div class="page-section-header">
+          <div>
+            <h2 class="section-title">⚙️ Settings</h2>
+            <p class="section-subtitle">Configure your SynthSpeak environment and preferences.</p>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Audio Settings -->
+          <div class="api-card">
+            <h3 class="api-card-title">🎤 Audio Settings</h3>
+            <div class="settings-form">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Whisper Model</div>
+                  <div class="settings-hint">Larger = more accurate but slower</div>
+                </div>
+                <select class="settings-select" id="settingWhisperModel">
+                  <option value="tiny">tiny (fastest)</option>
+                  <option value="base" selected>base (recommended)</option>
+                  <option value="small">small (accurate)</option>
+                  <option value="medium">medium (best quality)</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Sample Rate</div>
+                  <div class="settings-hint">Audio capture quality</div>
+                </div>
+                <select class="settings-select" id="settingSampleRate">
+                  <option value="16000" selected>16 kHz (standard)</option>
+                  <option value="44100">44.1 kHz (high quality)</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">VAD Filter</div>
+                  <div class="settings-hint">Remove silence automatically</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingVAD" checked /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Filler Word Sensitivity</div>
+                  <div class="settings-hint">Detection threshold</div>
+                </div>
+                <select class="settings-select" id="settingFillerSensitivity">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Settings -->
+          <div class="api-card">
+            <h3 class="api-card-title">📷 Video & Body Language</h3>
+            <div class="settings-form">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">MediaPipe Model</div>
+                  <div class="settings-hint">Pose & face detection complexity</div>
+                </div>
+                <select class="settings-select" id="settingMediapipe">
+                  <option value="0">Lite (fast)</option>
+                  <option value="1" selected>Full (recommended)</option>
+                  <option value="2">Heavy (most accurate)</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Skeleton Overlay</div>
+                  <div class="settings-hint">Show pose landmarks on video</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingSkeletonOverlay" /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Mirror Camera</div>
+                  <div class="settings-hint">Flip video feed horizontally</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingMirrorCam" checked /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Frame Rate</div>
+                  <div class="settings-hint">Analysis frames per second</div>
+                </div>
+                <select class="settings-select" id="settingFPS">
+                  <option value="15">15 FPS (low CPU)</option>
+                  <option value="24" selected>24 FPS (balanced)</option>
+                  <option value="30">30 FPS (smooth)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Settings -->
+          <div class="api-card">
+            <h3 class="api-card-title">👤 Profile</h3>
+            <div class="settings-form">
+              <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+                <div class="settings-label">Display Name</div>
+                <input type="text" class="manual-input" id="settingName" value="Sarath S" style="width:100%;" />
+              </div>
+              <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+                <div class="settings-label">Email</div>
+                <input type="email" class="manual-input" id="settingEmail" placeholder="your@email.com"
+                  style="width:100%;" />
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Language</div>
+                  <div class="settings-hint">Transcription language</div>
+                </div>
+                <select class="settings-select" id="settingLanguage">
+                  <option value="en" selected>English</option>
+                  <option value="hi">Hindi</option>
+                  <option value="ta">Tamil</option>
+                  <option value="auto">Auto-detect</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="api-card">
+            <h3 class="api-card-title">🔔 Notifications & Reports</h3>
+            <div class="settings-form">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Email Reports</div>
+                  <div class="settings-hint">Send session report to your email</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingEmailReports" /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Off-topic Alerts</div>
+                  <div class="settings-hint">Toast when you drift off topic</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingOffTopicAlerts" checked /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Session Auto-save</div>
+                  <div class="settings-hint">Auto-save recordings on stop</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingAutosave" checked /><span
+                    class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Company Notifications</div>
+                  <div class="settings-hint">Allow companies to receive your interview reports</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" id="settingCompanyNotif" checked /><span
+                    class="toggle-slider"></span></label>
+              </div>
+            </div>
+            <button class="start-btn" id="saveSettingsBtn"
+              style="width:100%;justify-content:center;margin-top:16px;background:var(--green);box-shadow:0 2px 10px rgba(22,163,74,0.3);">✓
+              Save Settings</button>
+          </div>
+
+          <!-- About -->
+          <div class="api-card" style="grid-column:1/-1;">
+            <h3 class="api-card-title">ℹ️ About SynthSpeak</h3>
+            <div class="about-grid">
+              <div class="about-item"><span class="about-label">Version</span><span class="about-val">2.0.0</span></div>
+              <div class="about-item"><span class="about-label">Backend</span><span class="about-val">FastAPI +
+                  Python</span></div>
+              <div class="about-item"><span class="about-label">STT Engine</span><span class="about-val">OpenAI
+                  Whisper</span></div>
+              <div class="about-item"><span class="about-label">Vision</span><span class="about-val">MediaPipe +
+                  OpenCV</span></div>
+              <div class="about-item"><span class="about-label">Similarity</span><span class="about-val">SBERT +
+                  Cosine</span></div>
+              <div class="about-item"><span class="about-label">OCR</span><span class="about-val">Google Cloud
+                  Vision</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODALS -->
+
+  <!-- Resume Upload Modal -->
+  <div class="modal-overlay hidden" id="resumeUploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📄 Upload Resume</h3>
+        <button class="modal-close" id="closeResumeModal">✕</button>
+      </div>
+      <p class="api-card-desc">Upload your resume (.pdf, .docx) or paste its text below. SynthSpeak will extract your
+        specific experience and generate 5 tailored interview questions.</p>
+      <div class="api-form">
+        <label class="api-label">Resume File</label>
+        <div
+          style="border: 1px dashed var(--border-color); border-radius: 6px; padding: 12px; text-align: center; margin-bottom: 12px; cursor: pointer; background: var(--bg-alt);"
+          id="resumeDropZone" onclick="document.getElementById('resumeFileInput').click()">
+          <span id="resumeFileName" style="font-size:13px; color:var(--text-light);">Click to select or drop file
+            here</span>
+          <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" style="display:none;"
+            onchange="document.getElementById('resumeFileName').textContent = this.files[0] ? this.files[0].name : 'Click to select or drop file here'" />
+        </div>
+        <div
+          style="text-align:center; font-size:11px; color:var(--text-lighter); margin-bottom:12px; text-transform:uppercase;">
+          — Or paste text —</div>
+        <label class="api-label">Resume Text</label>
+        <textarea id="modalResumeText" class="manual-input" rows="8" style="resize:vertical;"
+          placeholder="Paste your resume content here..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button class="start-btn" id="modalGenerateQsBtn" style="flex:1;justify-content:center;">✨ Generate
+          Questions</button>
+        <button class="confirm-btn neutral" id="modalCancelResumeBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Upload Modal -->
+  <div class="modal-overlay hidden" id="companyUploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📤 Upload Question Set</h3>
+        <button class="modal-close" id="closeCompanyModal">✕</button>
+      </div>
+      <p class="api-card-desc">Fill in your details and paste or upload your interview questions. Candidates will see
+        these during their session, and you'll receive a detailed report.</p>
+      <div class="api-form">
+        <label class="api-label">Company Name</label>
+        <input type="text" id="modalCompanyName" class="manual-input" placeholder="Acme Corp" />
+        <label class="api-label" style="margin-top:10px;">Notification Email</label>
+        <input type="email" id="modalCompanyEmail" class="manual-input" placeholder="hr@acme.com" />
+        <label class="api-label" style="margin-top:10px;">Role / Position</label>
+        <input type="text" id="modalCompanyRole" class="manual-input" placeholder="Software Engineer" />
+        <label class="api-label" style="margin-top:10px;">Interview Questions (one per line)</label>
+        <textarea id="modalQuestionsText" class="manual-input" rows="8" style="resize:vertical;"
+          placeholder="Tell me about yourself.&#10;What are your greatest strengths?&#10;Describe a challenging project…"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button class="start-btn" id="modalSaveQuestionsBtn" style="flex:1;justify-content:center;">💾 Save & Load
+          Questions</button>
+        <button class="confirm-btn neutral" id="modalCancelBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="help-overlay hidden" id="helpOverlay">
+    <div class="help-card">
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      <div class="shortcut-grid">
+        <kbd>O</kbd><span>Scan slide (OCR)</span>
+        <kbd>C</kbd><span>Confirm topic</span>
+        <kbd>R</kbd><span>Rescan</span>
+        <kbd>M</kbd><span>Manual topic entry</span>
+        <kbd>N</kbd><span>Reset topic (new slide)</span>
+        <kbd>H</kbd><span>Toggle this help</span>
+        <kbd>S</kbd><span>Screenshot</span>
+        <kbd>Q</kbd><span>Quit session</span>
+      </div>
+      <button class="close-help-btn" id="closeHelpBtn">Close</button>
+    </div>
+  </div>
+
+  <div class="start-tooltip" id="startTooltip">
+    <strong>Click "Start"</strong>
+    <p>Begin your Presentation Practice session</p>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
