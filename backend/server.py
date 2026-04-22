@@ -206,6 +206,8 @@ class AppState:
             if len(topic) < 3:
                 return {"ok": False, "error": "Topic too short"}
             vp.set_manual_topic(topic)
+            self.shared_state.set_manual_topic(topic)   # ensure manual_topic field is set
+            self.shared_state.set_topic_confirmed(True)
             self.shared_state.set_mode("manual")
             ap.resume_processing()
             return {"ok": True, "msg": f"Manual topic set: {topic}"}
@@ -351,9 +353,28 @@ async def set_mode(body: dict):
 @app.get("/status")
 async def status():
     """Health-check / current running state."""
+    ss = app_state.shared_state
     return {
         "running": app_state.running,
         "clients": len(connected_clients),
+        "topic_confirmed": ss.topic_confirmed if ss else False,
+        "confirmed_topic": ss.confirmed_topic if ss else "",
+        "mode": ss.mode if ss else "",
+    }
+
+
+@app.get("/debug/state")
+async def debug_state():
+    """Detailed state dump for diagnostics (safe to expose — no secrets)."""
+    if not app_state.shared_state:
+        return {"running": False, "error": "No shared state — pipelines never started"}
+    data = app_state.shared_state.get_json_snapshot()
+    data.pop("gesture_analysis", None)   # trim noise
+    data.pop("highlighted_transcript", None)
+    return {
+        "running": app_state.running,
+        "clients": len(connected_clients),
+        "pipeline_state": data,
     }
 _MEDIA_GLOB = ["*.wav", "*.webm", "*.mp4", "*.ogg"]
 
@@ -882,6 +903,11 @@ async def websocket_endpoint(ws: WebSocket):
                 if app_state.audio_pipeline:
                     app_state.audio_pipeline.reset_session()
                 await loop.run_in_executor(None, app_state.start_pipelines)
+                # Apply topic atomically if provided in the start message
+                start_topic = msg.get("topic", "").strip()
+                if start_topic and len(start_topic) >= 3:
+                    app_state.send_command("manual", topic=start_topic)
+                    print(f"✅ Topic set on start: '{start_topic}'")
                 await ws.send_text(json.dumps({"type": "ack", "cmd": "start", "ok": True}))
 
             elif cmd == "stop":

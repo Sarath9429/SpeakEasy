@@ -642,9 +642,8 @@ async function startPresentation() {
   // --- 2. Connect command WS and tell backend to start ---
 
   connectWS(() => {
-    sendWS({ cmd: 'start' });
-    // NOTE: cmd: manual is sent upon receiving the 'start' ack in handleWSMessage,
-    // ensuring pipelines are fully initialised before the topic is applied.
+    // Send topic atomically with the start command — no race condition
+    sendWS({ cmd: 'start', topic: state.topic || '' });
   });
 
 
@@ -1027,7 +1026,16 @@ function applyManualTopic() {
   if (!topic) { showToast('Please enter a topic first.', 'warn'); input?.focus(); return; }
   // Keep the input value visible so the user can see what topic is active
   state.topic = topic; state.topicConfirmed = true;
-  sendWS({ cmd: 'manual', topic });
+  // Primary: send via WebSocket (if session is live)
+  if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+    sendWS({ cmd: 'manual', topic });
+  }
+  // Secondary: also use REST API as fallback for robustness
+  fetch(API_URL + '/manual', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ topic })
+  }).catch(() => {}); // silent fail — WebSocket path is primary
   setText('topicStatusText', 'Topic Locked: ' + topic);
   setText('confirmedTopicDisplay', topic);
   const dot = document.getElementById('topicStatusDot');
