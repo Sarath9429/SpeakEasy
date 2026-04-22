@@ -276,6 +276,19 @@ class VisualPipeline:
         self.gesture_analyzer = None
         # Processing flag — prevents frame queue buildup when CPU is slow
         self._processing_frame = False
+        # Topic state — initialised here so set_manual_topic() and get_state_dict()
+        # can be called safely before run() completes.
+        self.topic_confirmed = False
+        self.confirmed_topic = ""
+        self.detected_topic = ""
+        self.pending_confirmation = False
+        self.manual_mode = False
+        # Lock and cache for the most-recently-received frame
+        self._last_frame_lock = threading.Lock()
+        self._last_frame = None
+        # OCR state
+        self.ocr_in_progress = False
+        self.ocr_trigger = threading.Event()
 
     
     def capture_screen(self):

@@ -274,7 +274,13 @@ function sendWS(data) {
 
 function handleWSMessage(data) {
   if (!data.type || data.type !== 'ack') state.lastWSSnap = data;
-  if (data.type === 'ack') return;
+  if (data.type === 'ack') {
+    // When backend confirms start, send the manual topic (pipelines are now ready)
+    if (data.cmd === 'start' && data.ok && state.topicConfirmed && state.topic) {
+      sendWS({ cmd: 'manual', topic: state.topic });
+    }
+    return;
+  }
   if (data.type === 'snapshot') {
     const snap = data.data || data;
     const v = Math.round((snap.similarity || 0) * 100);
@@ -637,9 +643,8 @@ async function startPresentation() {
 
   connectWS(() => {
     sendWS({ cmd: 'start' });
-    if (state.topicConfirmed && state.topic) {
-      setTimeout(() => { sendWS({ cmd: 'manual', topic: state.topic }); }, 500);
-    }
+    // NOTE: cmd: manual is sent upon receiving the 'start' ack in handleWSMessage,
+    // ensuring pipelines are fully initialised before the topic is applied.
   });
 
 
