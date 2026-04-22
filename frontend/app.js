@@ -5,11 +5,10 @@
  * the Python backend running on port 8000.
  */
 'use strict';
-const _port = location.port;
-const _origin = _port === '8000' ? '' : 'http://localhost:8000';
-const API_URL = _origin;
-const WS_URL = (_port === '8000' ? 'ws://' + location.host : 'ws://localhost:8000') + '/ws';
-const WS_STREAM_URL = (_port === '8000' ? 'ws://' + location.host : 'ws://localhost:8000') + '/ws/stream';
+const API_URL = '';
+const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+const WS_URL = `${wsProtocol}//${location.host}/ws`;
+const WS_STREAM_URL = `${wsProtocol}//${location.host}/ws/stream`;
 const PAGES = ['presentation', 'interview', 'dashboard', 'recordings', 'apikey', 'settings', 'analytics'];
 const PAGE_TITLES = {
   'presentation': 'Presentation Practice',
@@ -256,7 +255,7 @@ function connectWS(onReady) {
     state.ws = new WebSocket(WS_URL);
     state.ws.onopen = () => {
       state.wsConnected = true;
-      console.log('[SynthSpeak] Connected to backend ws://localhost:8000/ws');
+      console.log('[SynthSpeak] Connected to backend ' + WS_URL);
       if (onReady) onReady();
     };
     state.ws.onmessage = e => {
