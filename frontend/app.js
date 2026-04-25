@@ -1601,7 +1601,7 @@ function initInterview() {
     btn.disabled = true;
 
     try {
-      const resp = await fetch('http://localhost:8000/api/generate-questions-from-resume', {
+      const resp = await fetch(`${API_URL}/api/generate-questions-from-resume`, {
         method: 'POST',
         body: formData
       });
