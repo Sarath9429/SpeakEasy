@@ -69,7 +69,7 @@ app = FastAPI(title="SynthSpeak API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://speak-easy-eta-seven.vercel.app/",   # ← REPLACE with your Vercel URL
+        "https://speak-easy-eta-seven.vercel.app",    # Vercel frontend
         "https://*.vercel.app",               # covers Vercel preview URLs
         "http://localhost:8000",               # local dev backend
         "http://localhost:3000",               # local dev frontend
