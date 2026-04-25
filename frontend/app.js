@@ -2,20 +2,13 @@
  * SynthSpeak Dashboard Core Logic (app.js)
  * Coordinates the DOM updates, WebSocket streaming UI, chart rendering, 
  * and media processing mechanisms for the application. Integrates with 
- * the Python backend hosted on Render.
+ * the Python backend running on Render.
  */
 'use strict';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// BACKEND URL — set this to your Render service URL.
-// Find it in your Render dashboard → your service → the URL at the top.
-// Example: 'https://synthspeak.onrender.com'
-// ─────────────────────────────────────────────────────────────────────────────
-const BACKEND_URL = 'https://YOUR-SERVICE-NAME.onrender.com';  // ← REPLACE THIS
-
-const API_URL = BACKEND_URL;
-const WS_URL = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws';
-const WS_STREAM_URL = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws/stream';
+const API_URL = '';
+const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+const WS_URL = `${wsProtocol}//${location.host}/ws`;
+const WS_STREAM_URL = `${wsProtocol}//${location.host}/ws/stream`;
 const PAGES = ['presentation', 'interview', 'dashboard', 'recordings', 'apikey', 'settings', 'analytics'];
 const PAGE_TITLES = {
   'presentation': 'Presentation Practice',
@@ -308,7 +301,7 @@ function handleWSMessage(data) {
     setText('pauseValue', pc + ' pauses');
     const fBreakdown = document.getElementById('posFillerBreakdown');
     if (fBreakdown && fc > 0) fBreakdown.innerHTML = '<span class="pos-filler-empty" style="color:var(--text-primary);font-style:normal;">' + fc + ' filler words detected.</span>';
-    
+
     const pChips = document.getElementById('pauseChips');
     if (pChips && pc > 0) pChips.innerHTML = '<span style="font-size:12px;color:var(--text-primary);">' + pc + ' long pauses during speech.</span>';
     const tw = snap.total_word_count || 0;
@@ -334,13 +327,13 @@ function handleWSMessage(data) {
       }
     }
     const transcript = snap.transcription || snap.annotated_transcript || '';
-    
+
     if (typeof iv2 !== 'undefined' && iv2.waitingForFeedback) {
       iv2.waitingForFeedback = false;
-      const finalTranscript = iv2.fullTranscript && iv2.fullTranscript.trim().length > transcript.trim().length 
-        ? iv2.fullTranscript.trim() 
+      const finalTranscript = iv2.fullTranscript && iv2.fullTranscript.trim().length > transcript.trim().length
+        ? iv2.fullTranscript.trim()
         : transcript.trim();
-        
+
       const avg = iv2.scores.length ? Math.round(iv2.scores.reduce((a, b) => a + b, 0) / iv2.scores.length) : Math.round((snap.similarity || 0) * 100);
       const fc = snap.filler_word_count || 0;
       const tw = Math.max(1, snap.total_word_count || 1);
@@ -380,7 +373,7 @@ function handleWSMessage(data) {
         if (section) section.innerHTML = '<div style="color:var(--text-muted);font-size:12px;padding:8px 0;">Transcript too short for AI feedback. Please provide an answer next time!</div>';
       }
     }
-    
+
     const topic = snap.confirmed_topic || snap.slide_topic || '';
     const concEl = document.getElementById('concisenessContent');
     if (concEl && transcript.length > 20) {
@@ -390,34 +383,34 @@ function handleWSMessage(data) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript, topic })
       })
-      .then(r => r.json())
-      .then(d => {
-        if (d.ok && d.feedback) {
-          const fb = d.feedback;
-          concEl.innerHTML =
-            '<div class="conciseness-critique">' +
+        .then(r => r.json())
+        .then(d => {
+          if (d.ok && d.feedback) {
+            const fb = d.feedback;
+            concEl.innerHTML =
+              '<div class="conciseness-critique">' +
               '<div class="iv2-fb-card-title" style="margin:0 0 6px;"><span>🔍</span> What to Improve</div>' +
               '<p style="color:var(--text-primary);font-size:13px;line-height:1.6;margin:0 0 10px;">' + (fb.critique || '—') + '</p>' +
-            '</div>' +
-            '<div class="iv2-fb-card iv2-better" style="margin:0;">' +
+              '</div>' +
+              '<div class="iv2-fb-card iv2-better" style="margin:0;">' +
               '<div class="iv2-fb-card-title"><span>📝</span> You could have said</div>' +
               '<p class="iv2-fb-card-body iv2-better-text">' + (fb.ideal_version || '—') + '</p>' +
-            '</div>';
-        } else {
-          concEl.innerHTML = '<p style="color:var(--text-muted);font-size:12px;">Could not generate feedback.</p>';
-        }
-      })
-      .catch(() => {
-        concEl.innerHTML = '<p style="color:var(--text-muted);font-size:12px;">Feedback unavailable.</p>';
-      });
+              '</div>';
+          } else {
+            concEl.innerHTML = '<p style="color:var(--text-muted);font-size:12px;">Could not generate feedback.</p>';
+          }
+        })
+        .catch(() => {
+          concEl.innerHTML = '<p style="color:var(--text-muted);font-size:12px;">Feedback unavailable.</p>';
+        });
     }
     try {
       const log = {
         id: Date.now(), timestamp: Date.now(),
-        name: 'Live Session (' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ')',
+        name: 'Live Session (' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ')',
         topic: topic || 'Practice',
         duration_s: snap.duration_s || 60,
-        relevanceScore: Math.round((snap.similarity || 0) * 100), 
+        relevanceScore: Math.round((snap.similarity || 0) * 100),
         fillerCount: fc,
         totalWords: tw, wpm: snap.wpm || 0,
         transcript: transcript, filename: null, source: 'live'
@@ -425,7 +418,7 @@ function handleWSMessage(data) {
       let sessions = JSON.parse(localStorage.getItem('ss_sessions') || '[]');
       sessions.unshift(log);
       localStorage.setItem('ss_sessions', JSON.stringify(sessions.slice(0, 200)));
-    } catch(e) { console.error('Error saving session locally:', e); }
+    } catch (e) { console.error('Error saving session locally:', e); }
     state.lastWSSnap = snap;
     return;
   }
@@ -742,13 +735,13 @@ function stopPresentation() {
 
   // Stop /ws/stream
   if (state.streamWs) {
-    try { state.streamWs.close(); } catch(e) {}
+    try { state.streamWs.close(); } catch (e) { }
     state.streamWs = null;
   }
 
   // Stop AudioContext
   if (state.audioContext) {
-    try { state.audioContext.close(); } catch(e) {}
+    try { state.audioContext.close(); } catch (e) { }
     state.audioContext = null;
   }
 
@@ -1042,7 +1035,7 @@ function applyManualTopic() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ topic })
-  }).catch(() => {}); // silent fail — WebSocket path is primary
+  }).catch(() => { }); // silent fail — WebSocket path is primary
   setText('topicStatusText', 'Topic Locked: ' + topic);
   setText('confirmedTopicDisplay', topic);
   const dot = document.getElementById('topicStatusDot');
@@ -1722,10 +1715,10 @@ function iv2Start() {
     };
 
     iv2.recognition.onend = () => {
-      if (iv2.active) { try { iv2.recognition.start(); } catch(e) {} }
+      if (iv2.active) { try { iv2.recognition.start(); } catch (e) { } }
     };
 
-    try { iv2.recognition.start(); } catch(e) { console.warn('SpeechRecognition start failed:', e); }
+    try { iv2.recognition.start(); } catch (e) { console.warn('SpeechRecognition start failed:', e); }
   } else {
     showToast('Live transcript requires Chrome — words will appear after session.', 'warn');
   }
@@ -1741,7 +1734,7 @@ function iv2Stop() {
   const badge = document.getElementById('iv2LiveBadge');
   if (badge) badge.style.display = 'none';
   if (iv2.recognition) {
-    try { iv2.recognition.stop(); } catch(e) {}
+    try { iv2.recognition.stop(); } catch (e) { }
     iv2.recognition = null;
   }
   sendWS({ cmd: 'stop' });
@@ -1832,12 +1825,12 @@ async function iv2FetchAIFeedback(question, transcript, iType) {
         <div class="iv2-fb-card-title"><span>📝</span> Ideal Answer</div>
         <p class="iv2-fb-card-body iv2-better-text">${fb.better_version || '—'}</p>
       </div>
-      ${ fb.followup_questions && fb.followup_questions.length ? `
+      ${fb.followup_questions && fb.followup_questions.length ? `
       <div class="iv2-fb-card iv2-followup">
         <div class="iv2-fb-card-title"><span>❓</span> Follow-up Questions</div>
         <div class="iv2-followup-carousel">${followups}</div>
         ${fqNav}
-      </div>` : '' }
+      </div>` : ''}
     `;
     let fqIdx = 0;
     const items = section.querySelectorAll('.iv2-followup-item');
