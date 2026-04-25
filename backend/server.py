@@ -64,8 +64,8 @@ class SessionData(BaseModel):
 app = FastAPI(title="SynthSpeak API", version="1.0.0")
 
 # ── CORS ─────────────────────────────────────────────────────────────────────
-# Allow requests from Vercel frontend + local dev.
-# After deploying to Vercel, add your exact Vercel URL to the list.
+# Allow requests from the Vercel frontend + local dev.
+# After deploying to Vercel, replace the placeholder with your real Vercel URL.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

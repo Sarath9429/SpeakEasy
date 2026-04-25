@@ -1,5 +1,6 @@
-# ── SynthSpeak Backend — Koyeb Dockerfile ──────────────────────────────────
-# Uses python:3.11-slim to keep the image small.
+# ── SynthSpeak Backend — Dockerfile ────────────────────────────────────────
+# NOTE: Render uses render.yaml (buildCommand + startCommand) by default.
+# This Dockerfile is here as a fallback / for local Docker testing.
 # MediaPipe + OpenCV headless work without a display (safe for containers).
 
 FROM python:3.11-slim

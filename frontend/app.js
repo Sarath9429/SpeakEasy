@@ -2,15 +2,16 @@
  * SynthSpeak Dashboard Core Logic (app.js)
  * Coordinates the DOM updates, WebSocket streaming UI, chart rendering, 
  * and media processing mechanisms for the application. Integrates with 
- * the Python backend hosted on Koyeb.
+ * the Python backend hosted on Render.
  */
 'use strict';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BACKEND URL — set this to your Koyeb service URL after deployment.
-// Example: 'https://synthspeak-yourname.koyeb.app'
+// BACKEND URL — set this to your Render service URL.
+// Find it in your Render dashboard → your service → the URL at the top.
+// Example: 'https://synthspeak.onrender.com'
 // ─────────────────────────────────────────────────────────────────────────────
-const BACKEND_URL = 'https://YOUR-APP-NAME.koyeb.app';  // ← REPLACE THIS
+const BACKEND_URL = 'https://YOUR-SERVICE-NAME.onrender.com';  // ← REPLACE THIS
 
 const API_URL = BACKEND_URL;
 const WS_URL = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws';
