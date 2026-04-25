@@ -673,7 +673,7 @@ async def generate_questions_from_resume(file: UploadFile = File(None), text: st
             "Accept": "application/json",
         }
         payload = {
-            "model": "meta/llama-3.1-405b-instruct",
+            "model": "meta/llama-3.1-70b-instruct",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.5,
             "top_p": 1,
@@ -769,7 +769,7 @@ async def interview_feedback(req: InterviewFeedbackRequest):
             "Accept": "application/json",
         }
         payload = {
-            "model": "meta/llama-3.1-405b-instruct",
+            "model": "meta/llama-3.1-70b-instruct",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.6,
             "top_p": 1,
@@ -1010,7 +1010,7 @@ async def practice_conciseness(req: ConciseFeedbackRequest):
         )
         headers = {"Authorization": "Bearer " + NVIDIA_API_KEY, "Content-Type": "application/json"}
         payload = {
-            "model": "meta/llama-3.1-405b-instruct",
+            "model": "meta/llama-3.1-70b-instruct",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.5, "max_tokens": 512, "stream": False
         }
