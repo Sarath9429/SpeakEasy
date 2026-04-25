@@ -20,8 +20,7 @@ import cv2
 import numpy as np
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPException, UploadFile, File, Form
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from .visual_pipeline import VisualPipeline
 from .audio_pipeline import AudioPipeline
@@ -29,7 +28,10 @@ from .fusion_layer import FusionLayer, SharedState
 
 import sqlite3
 
-DB_FILE = "synthspeak.db"
+# Base directory of the project (one level up from backend/)
+_BASE_DIR = Path(__file__).parent.parent
+
+DB_FILE = str(_BASE_DIR / "synthspeak.db")
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)
@@ -61,18 +63,24 @@ class SessionData(BaseModel):
     duration: int
 app = FastAPI(title="SynthSpeak API", version="1.0.0")
 
+# ── CORS ─────────────────────────────────────────────────────────────────────
+# Allow requests from Vercel frontend + local dev.
+# After deploying to Vercel, add your exact Vercel URL to the list.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://YOUR-APP-NAME.vercel.app",   # ← REPLACE with your Vercel URL
+        "https://*.vercel.app",               # covers Vercel preview URLs
+        "http://localhost:8000",               # local dev backend
+        "http://localhost:3000",               # local dev frontend
+        "http://127.0.0.1:5500",              # VS Code Live Server
+        "*",                                  # keep * during initial testing
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
-app.mount(
-    "/static",
-    StaticFiles(directory=str(FRONTEND_DIR)),
-    name="static",
-)
+# NOTE: Frontend is now served by Vercel — no static file mounting needed.
 class AppState:
     """
     Manages the global state of all threaded AI pipelines. Facilitates 
@@ -224,9 +232,10 @@ class AppState:
 
         return {"ok": False, "error": f"Unknown command: {cmd}"}
 app_state = AppState()
-RECORDINGS_DIR = Path(__file__).parent / "recordings"
+RECORDINGS_DIR = _BASE_DIR / "recordings"
 RECORDINGS_DIR.mkdir(exist_ok=True)
-API_KEYS_FILE = Path(__file__).parent / "api_keys.json"
+API_KEYS_FILE = _BASE_DIR / "api_keys.json"
+
 
 def _load_api_keys() -> dict:
     if API_KEYS_FILE.exists():
@@ -284,23 +293,22 @@ async def on_startup():
     """Start the background broadcaster when the server starts."""
     asyncio.create_task(broadcast_loop())
     print("📡 WebSocket broadcaster started")
-@app.get("/", response_class=HTMLResponse)
+@app.get("/health")
+async def health_check():
+    """Koyeb health check endpoint — must return 200 for the service to be marked healthy."""
+    return {"status": "ok", "service": "SynthSpeak Backend"}
+
+
+@app.get("/")
 async def root():
-    """Serve the main frontend page."""
-    html_path = FRONTEND_DIR / "index.html"
-    return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
-
-
-@app.get("/style.css")
-async def serve_css():
-    return FileResponse(str(FRONTEND_DIR / "style.css"), media_type="text/css")
-
-
-@app.get("/app.js")
-async def serve_js():
-    return FileResponse(
-        str(FRONTEND_DIR / "app.js"), media_type="application/javascript"
-    )
+    """API root — frontend is served by Vercel."""
+    return {
+        "service": "SynthSpeak API",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/health",
+        "status": "running",
+    }
 
 @app.post("/start")
 async def start_session():

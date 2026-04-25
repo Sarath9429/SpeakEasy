@@ -2,13 +2,19 @@
  * SynthSpeak Dashboard Core Logic (app.js)
  * Coordinates the DOM updates, WebSocket streaming UI, chart rendering, 
  * and media processing mechanisms for the application. Integrates with 
- * the Python backend running on port 8000.
+ * the Python backend hosted on Koyeb.
  */
 'use strict';
-const API_URL = '';
-const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-const WS_URL = `${wsProtocol}//${location.host}/ws`;
-const WS_STREAM_URL = `${wsProtocol}//${location.host}/ws/stream`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BACKEND URL — set this to your Koyeb service URL after deployment.
+// Example: 'https://synthspeak-yourname.koyeb.app'
+// ─────────────────────────────────────────────────────────────────────────────
+const BACKEND_URL = 'https://YOUR-APP-NAME.koyeb.app';  // ← REPLACE THIS
+
+const API_URL = BACKEND_URL;
+const WS_URL = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws';
+const WS_STREAM_URL = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws/stream';
 const PAGES = ['presentation', 'interview', 'dashboard', 'recordings', 'apikey', 'settings', 'analytics'];
 const PAGE_TITLES = {
   'presentation': 'Presentation Practice',
