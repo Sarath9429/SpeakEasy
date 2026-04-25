@@ -687,7 +687,7 @@ async def generate_questions_from_resume(file: UploadFile = File(None), text: st
                 "https://integrate.api.nvidia.com/v1/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=60.0
+                timeout=120.0
             )
             resp.raise_for_status()
             data = resp.json()
@@ -783,7 +783,7 @@ async def interview_feedback(req: InterviewFeedbackRequest):
                 "https://integrate.api.nvidia.com/v1/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=60.0
+                timeout=120.0
             )
             resp.raise_for_status()
             data = resp.json()
@@ -1018,7 +1018,7 @@ async def practice_conciseness(req: ConciseFeedbackRequest):
         async with httpx.AsyncClient() as client:
             resp = await client.post(
                 "https://integrate.api.nvidia.com/v1/chat/completions",
-                headers=headers, json=payload, timeout=30.0)
+                headers=headers, json=payload, timeout=120.0)
             resp.raise_for_status()
         reply = resp.json()["choices"][0]["message"]["content"].strip()
         reply = _re.sub(r'^```(?:json)?\s*', '', reply)

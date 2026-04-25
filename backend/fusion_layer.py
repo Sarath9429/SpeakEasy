@@ -409,7 +409,7 @@ class FusionLayer:
                 }
                 try:
                     resp = self._http.post(
-                        NVIDIA_EMBED_URL, headers=headers, json=payload, timeout=60.0
+                        NVIDIA_EMBED_URL, headers=headers, json=payload, timeout=120.0
                     )
                     resp.raise_for_status()
                     data = resp.json()
