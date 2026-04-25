@@ -16,7 +16,7 @@ import os
 # Retrieves the NVIDIA API key from the environment for hardware-accelerated LLM embeddings.
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "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")
 NVIDIA_EMBED_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
-NVIDIA_MODEL = "meta/llama-3.1-8b-instruct"
+NVIDIA_MODEL = "meta/llama-3.1-405b-instruct"
 
 class SharedState:
     """
