@@ -1,125 +1,182 @@
-# 🚗 Vision Guard- ADAS( Realtime Lane Detection )
+# 🎙️ SynthSpeak — AI-Powered Presentation & Interview Coach
 
 <p align="center">
-    <a href="#"><img alt="Python" src="https://img.shields.io/badge/Python-3.8%2B-14354C.svg?logo=python&logoColor=white"></a>
-    <a href="#"><img alt="OpenCV" src="https://img.shields.io/badge/OpenCV-4.x-5C3EE8.svg?logo=opencv&logoColor=white"></a>
-    <a href="#"><img alt="CUDA" src="https://img.shields.io/badge/NVIDIA%20CUDA-11.x-76B900.svg?logo=nvidia&logoColor=white"></a>
-    <a href="#"><img alt="ONNX" src="https://img.shields.io/badge/ONNX-Inference-005ced.svg?logo=onnx&logoColor=white"></a>
-    <a href="#"><img alt="YOLOv8" src="https://img.shields.io/badge/YOLOv8-Detection-00FFFF.svg?logo=ultralytics&logoColor=white"></a>
+    <a href="#"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-14354C.svg?logo=python&logoColor=white"></a>
+    <a href="#"><img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688.svg?logo=fastapi&logoColor=white"></a>
+    <a href="#"><img alt="MediaPipe" src="https://img.shields.io/badge/MediaPipe-4285F4.svg?logo=google&logoColor=white"></a>
+    <a href="#"><img alt="Deepgram" src="https://img.shields.io/badge/Deepgram-Nova--2-13EF93.svg?logo=deepgram&logoColor=white"></a>
+    <a href="#"><img alt="NVIDIA" src="https://img.shields.io/badge/NVIDIA-Llama--3.1-76B900.svg?logo=nvidia&logoColor=white"></a>
+    <a href="#"><img alt="WebSocket" src="https://img.shields.io/badge/WebSocket-Live-orange.svg?logo=socketdotio&logoColor=white"></a>
 </p>
 
-A high-performance **Advanced Driver-Assistance System (ADAS)** software pipeline. This project implements high-speed lane detection, vehicle tracking, and safety analysis using the **ONNX Runtime**. It is designed to provide real-time situational awareness by processing various driving conditions including day, night, and rain.
+A real-time **AI coaching platform** that helps you master public speaking and ace job interviews. SynthSpeak analyzes your **speech content**, **vocal quality**, **body language**, and **eye contact** simultaneously — delivering instant, actionable feedback through a live browser dashboard powered by WebSockets.
 
 ---
 
 # ➤ Contents
 1) [Project Showcase](#Project-Showcase)
-2) [ADAS Features Explained](#ADAS-Features)
-3) [Dataset](#Dataset)
-4) [System Architecture](#System-Architecture)
-5) [Workflow Methodology](#Core-Methodology)
-6) [Model Zoo & Downloads](#Model-Zoo)
-7) [Requirements & Setup](#Requirements)
-8) [License](#License)
+2) [Features Explained](#Features-Explained)
+3) [System Architecture](#System-Architecture)
+4) [Technology Stack](#Technology-Stack)
+5) [Requirements & Setup](#Requirements)
+6) [API Reference](#API-Reference)
+7) [License](#License)
 
 ---
 
 <h1 id="Project-Showcase">📸 Project Showcase</h1>
 
-### 🖼️ System Output (Day / Night / Rain)
-| **Daylight Conditions** | **Night Conditions** |
-| :---: | :---: |
-| ![Day Output](demo/dayop.jpeg) | ![Night Output](demo/nightop.jpeg) |
-| *Clear lane visibility and object tracking* | *Robust detection in low-light environments* |
+### 🎬 Demo Video
 
-| **Rainy / Wet Conditions** | **Bird's Eye View (BEV)** |
+<!-- ╔════════════════════════════════════════════════════════════════╗ -->
+<!-- ║  HOW TO ADD YOUR DEMO VIDEO:                                  ║ -->
+<!-- ║                                                                ║ -->
+<!-- ║  Option 1 — Local MP4/WebM:                                   ║ -->
+<!-- ║    <video src="demo.mp4" controls width="100%"></video>        ║ -->
+<!-- ║                                                                ║ -->
+<!-- ║  Option 2 — YouTube Link:                                     ║ -->
+<!-- ║    [![Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)]       ║ -->
+<!-- ║    (https://www.youtube.com/watch?v=VIDEO_ID)                  ║ -->
+<!-- ║                                                                ║ -->
+<!-- ║  Option 3 — GIF:                                              ║ -->
+<!-- ║    ![SynthSpeak Demo](demo.gif)                               ║ -->
+<!-- ╚════════════════════════════════════════════════════════════════╝ -->
+
+<p align="center">
+
+  <!-- 🔽 REPLACE THIS BLOCK WITH YOUR ACTUAL DEMO VIDEO / GIF 🔽 -->
+
+  <img src="https://via.placeholder.com/800x450/1a1a2e/16c79a?text=🎬+Demo+Video+Coming+Soon" alt="Demo Placeholder" width="80%"/>
+
+  <!-- 🔼 REPLACE THIS BLOCK WITH YOUR ACTUAL DEMO VIDEO / GIF 🔼 -->
+
+</p>
+
+<p align="center"><i>⬆️ Replace this placeholder with your recorded demo</i></p>
+
+### 🖼️ Screenshots
+| **Presentation Mode** | **Interview Mode** |
 | :---: | :---: |
-| ![Rainy Output](demo/rainop.jpeg) | ![BEV Panel](demo/BEV.jpeg) |
-| *Handling reflections and reduced visibility* | *Top-down view for precise offset math* |
+| ![Presentation](https://via.placeholder.com/400x250/1a1a2e/16c79a?text=Presentation+Mode) | ![Interview](https://via.placeholder.com/400x250/1a1a2e/16c79a?text=Interview+Mode) |
+| *Real-time speech & body language coaching* | *AI-generated questions with structured feedback* |
+
+| **Recordings Archive** | **Live Dashboard** |
+| :---: | :---: |
+| ![Recordings](https://via.placeholder.com/400x250/1a1a2e/16c79a?text=Recordings+Archive) | ![Dashboard](https://via.placeholder.com/400x250/1a1a2e/16c79a?text=Live+Dashboard) |
+| *Session playback and retroactive analysis* | *10 Hz WebSocket-powered live metrics* |
 
 ---
 
-<h1 id="ADAS-Features">🛡️ ADAS Features Explained</h1>
+<h1 id="Features-Explained">🛡️ Features Explained</h1>
 
-This project implements three critical safety systems through a unified computer vision architecture:
+SynthSpeak operates in two primary modes, each backed by three parallel AI pipelines:
 
-### 1. FCWS (Forward Collision Warning System)
-The **FCWS** acts as a digital eye monitoring the space ahead. Using **YOLOv8**, the system detects vehicles (cars, trucks, buses) and classifies them in real-time. By analyzing the bounding box scale and position, it estimates the distance to the vehicle in front. If the distance decreases rapidly, the system alerts the driver via a "WARNING" or "PROMPT" overlay to prevent rear-end collisions.
+### 1. Presentation Mode
+Type in your slide topic and SynthSpeak coaches you in real-time while you speak. It monitors **what you say** and **how you say it**, plus your **physical delivery** — all at once.
 
-### 2. LDWS (Lane Departure Warning System)
-The **LDWS** is designed to prevent accidents caused by lane drifting. Using the **UFLDv2** model, the system identifies the ego-lane boundaries. It monitors the vehicle's position relative to these lines; if the vehicle’s tire approaches or touches the lane markings without a steering intent, the system triggers a "Departure Warning," visually indicating which side the vehicle is drifting toward.
+| Category | What's Tracked | Powered By |
+| :--- | :--- | :--- |
+| **Topic Relevance** | Scores (0–100%) how well your speech aligns with your topic | NVIDIA Llama 3.1 |
+| **Filler Words** | Detects `um`, `uh`, `like`, `you know`, `basically`, and 10+ patterns | Deepgram Nova-2 |
+| **Speaking Pace** | Live words-per-minute (WPM) tracking | Deepgram Nova-2 |
+| **Long Pauses** | Flags silences longer than 2 seconds | Audio Pipeline |
+| **Eye Contact** | Iris tracking to detect if you're looking at the camera or away | MediaPipe FaceMesh (478 pts) |
+| **Posture Score** | 0–100 score checking slouching, shoulder alignment, leaning, centering | MediaPipe BlazePose (33 joints) |
+| **Hand Gestures** | Classifies gesture type and movement intensity | MediaPipe Hands (21 pts/hand) |
+| **Face Orientation** | Pitch, yaw, roll angles — detects if you're facing the camera | FaceMesh 3D geometry |
 
-### 3. LKAS (Lane Keeping Assist System)
-**LKAS** provides higher-level guidance by calculating the vehicle's exact trajectory. It transforms the front camera view into a **Bird's Eye View (BEV)** to calculate:
-* **Lateral Offset:** The distance (in cm) from the vehicle's center to the lane center.
-* **Curvature Tracking:** Identifying if the road is curving (Straight, Easy Left/Right, or Hard Left/Right).
-This data provides a "Normal" keep-straight guidance to ensure the driver stays centered.
+### 2. Interview Mode
+Upload your resume and let the AI simulate a real interview experience:
 
----
+1. **Upload Resume** — Supports PDF, DOCX, or plain text.
+2. **AI Generates 5 Questions** — NVIDIA Llama 3.1 reads your resume and creates tailored, challenging questions based on your skills and projects.
+3. **Answer Out Loud** — Speak naturally; your voice is transcribed live.
+4. **Get Structured Feedback** — For each answer, the AI returns:
+   - **Growth Area** — What to improve
+   - **Missing Points** — Key things you forgot to mention
+   - **Better Version** — A model ideal answer
+   - **Follow-up Questions** — What an interviewer might ask next
 
-<h1 id="Dataset">📊 Dataset</h1>
-
-The models used in this project were tested and validated using a diverse driving dataset to ensure reliability in different environments.
-
-* **Dataset Source:** [Kaggle - Driving Video for Lane Detection (Various Weather)](https://www.kaggle.com/datasets/ashikadnan/driving-video-for-lane-detection-various-weather)
-* **Description:** This dataset includes high-quality driving footage captured during daylight, nighttime, and rainy conditions, which was essential for calibrating our LDWS and LKAS logic against glare and reflections.
+### 3. Session Recordings & History
+* Every session is **auto-saved** as a WAV file when you stop.
+* **Upload any past recording** for retroactive analysis (transcript, filler count, WPM, relevance).
+* All sessions are logged to a **SQLite database** with scores, duration, and timestamps.
 
 ---
 
 <h1 id="System-Architecture">🏗️ System Architecture</h1>
 
-Below is the high-level block diagram representing the system flow from raw video input to final visual feedback.
+Below is the high-level system flow from browser input to real-time coaching feedback.
 
-<p align="center">
-  <img src="demo/block_diagram.jpeg" alt="System Block Diagram" width="900">
-</p>
-
-
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    BROWSER (Frontend)                        │
+│                                                              │
+│   getUserMedia ──► Camera + Mic ──► WebSocket Stream          │
+│                                                              │
+│   Live Dashboard ◄── JSON state @ 10 Hz ◄── Server           │
+│   (Scores, Transcript, Gauges, Feedback Cards)               │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ WebSocket (ws://)
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│                   FASTAPI SERVER (Backend)                    │
+│                                                              │
+│  ┌────────────────┐  ┌────────────────┐  ┌───────────────┐  │
+│  │ Visual Pipeline│  │ Audio Pipeline │  │ Fusion Layer  │  │
+│  │                │  │                │  │               │  │
+│  │ • FaceMesh     │  │ • Deepgram     │  │ • NVIDIA      │  │
+│  │   (478 pts)    │  │   Nova-2 API   │  │   Llama 3.1   │  │
+│  │ • BlazePose    │  │ • Filler word  │  │ • Semantic     │  │
+│  │   (33 joints)  │  │   detection    │  │   relevance   │  │
+│  │ • Hand Tracker │  │ • WPM / Pause  │  │   scoring     │  │
+│  │   (21 pts/hand)│  │ • WAV export   │  │ • TF-IDF      │  │
+│  │                │  │                │  │   fallback    │  │
+│  └───────┬────────┘  └───────┬────────┘  └───────┬───────┘  │
+│          └───────────────────┼────────────────────┘           │
+│                              ▼                               │
+│           ┌──────────────────────────────────┐               │
+│           │  SharedState (Thread-safe store)  │               │
+│           │  Syncs all pipelines @ 10 Hz      │               │
+│           └──────────────────────────────────┘               │
+│                                                              │
+│  SQLite DB (history)  •  Recordings (WAV/WebM)  •  REST API │
+└──────────────────────────────────────────────────────────────┘
+                        │               │
+                        ▼               ▼
+              ┌─────────────┐  ┌──────────────┐
+              │  Deepgram   │  │  NVIDIA NIM  │
+              │  Cloud API  │  │  Cloud API   │
+              └─────────────┘  └──────────────┘
+```
 
 ---
 
-<h1 id="Core-Methodology">🧠 Workflow Methodology</h1>
+<h1 id="Technology-Stack">⚙️ Technology Stack</h1>
 
-The software operates as a multi-stage computer vision pipeline designed for high-efficiency inference using **ONNX Runtime**.
-
-### Phase 1: Data Ingestion & Preprocessing
-Raw video frames are captured and normalized (pixel values scaled 0-1) to match the input tensor requirements of YOLOv8 and UFLDv2. This ensures consistent accuracy across different lighting conditions.
-
-### Phase 2: Parallel AI Inference
-Two distinct deep learning models run concurrently to analyze the scene:
-* **Vehicle Perception (YOLOv8):** Scans the frame to identify and categorize cars, trucks, and obstacles.
-* **Lane Segmentation (UFLDv2):** Treats lane detection as a row-based classification task to rapidly predict the precise location of lane markings (anchors).
-
-### Phase 3: Temporal Tracking & Spatial Mapping
-* **Multi-Object Tracking (ByteTrack):** Raw detections are fed into a **Kalman Filter** to predict future positions and maintain persistent IDs for vehicles, even during temporary occlusions.
-* **Bird's-Eye View (BEV) Transformation:** An **Inverse Perspective Mapping (IPM)** matrix transforms the skewed camera view into a top-down 2D view. This allows the system to convert pixel distances into real-world metric units (cm) for accurate offset and curvature calculation.
-
-### Phase 4: Safety Logic & Decision Gate
-The system calculates the lateral distance from the vehicle center to the detected ego-lane center. If the offset exceeds safety thresholds, specific warnings (LDWS/FCWS) are triggered based on Time-to-Collision (TTC) and lateral drift speed.
-
-### Phase 5: Visualization & Final Output
-The system draws dynamic bounding boxes, polygonal lane overlays (colored Green for Safe or Red for Warning), and an ADAS dashboard directly onto the output video stream.
-
----
-
-<h1 id="Model-Zoo">📂 Model Zoo & Downloads</h1>
-
-All models are used in **.onnx** format. Ensure they are placed in the appropriate project folders.
-
-| Component | Architecture | Model Download Link |
+| Layer | Technology | Role |
 | :--- | :--- | :--- |
-| **Lane Model (Day/Night)** | UFLDv2 | [Download CULane ResNet18 ONNX](https://github.com/cfzd/Ultra-Fast-Lane-Detection-v2#model-zoo) |
-| **Lane Model (Curves)** | UFLDv2 | [Download CurveLanes ONNX](https://github.com/cfzd/Ultra-Fast-Lane-Detection-v2#model-zoo) |
-| **Object Detection** | YOLOv8 | [Download YOLOv8 Large ONNX](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8l.pt) |
+| **Backend** | FastAPI + Uvicorn | Async HTTP + WebSocket server |
+| **Speech-to-Text** | Deepgram Nova-2 | Live audio transcription with filler detection |
+| **LLM Scoring** | NVIDIA Llama-3.1-70B | Topic relevance grading + interview coaching |
+| **Face Analysis** | MediaPipe FaceMesh | 478-point facial landmarks for eye contact & gaze |
+| **Pose Estimation** | MediaPipe BlazePose | 33-joint skeleton for posture detection |
+| **Hand Tracking** | MediaPipe Hands | Gesture classification & movement intensity |
+| **Database** | SQLite | Session history storage |
+| **Frontend** | Vanilla HTML / CSS / JS | WebSocket-powered live dashboard |
+| **Deployment** | Render.com | One-click deploy via `render.yaml` blueprint |
 
 ---
 
 <h1 id="Requirements">🛠️ Setup & Installation</h1>
 
 ### 1. Requirements
-* **Python 3.8+**
-* **NVIDIA GPU** (Optional, but highly recommended for ONNX `CUDAExecutionProvider`)
-* **ONNX Runtime** (`onnxruntime-gpu` for NVIDIA cards)
+* **Python 3.10+**
+* A **webcam** and **microphone**
+* API keys from:
+  * 🔑 [Deepgram](https://deepgram.com) — for speech-to-text (free tier available)
+  * 🔑 [NVIDIA NIM](https://build.nvidia.com) — for LLM scoring (free tier available)
+
 ### Install all required libraries from the requirements file
 ```powershell
 pip install -r requirements.txt
@@ -137,25 +194,64 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-### 3.1 Download Weights
-Download your desired pre-trained models from the links provided in the Model Zoo section. These weights are typically provided in PyTorch format (.pth or .pt).
+### 3. Set Your API Keys
 
-### 3.2 Convert PyTorch to ONNX
-We provide a dedicated script to handle the conversion for the lane detection system.
-* Open the file TrafficLaneDetector\convertPytorchToONNX.py.
-
-* Locate the model path variable and pasted the path to your downloaded PyTorch file there.
-
-* Run the conversion script in your terminal:
- ```powershell
- python TrafficLaneDetector\convertPytorchToONNX.py
- ```
-### 3.3 Configure main.py
-Once the conversion is complete, paste the resulting ONNX model paths into the configuration section of main.py to ensure the program can locate the optimized engines.
-
-### 4 Run Main
 ```powershell
-python main.py
+# Windows (PowerShell)
+$env:NVIDIA_API_KEY = "nvapi-xxxxxxxxxxxxxxxxxxxx"
+$env:DEEPGRAM_API_KEY = "your_deepgram_key_here"
+```
+```bash
+# Linux / macOS
+export NVIDIA_API_KEY=nvapi-xxxxxxxxxxxxxxxxxxxx
+export DEEPGRAM_API_KEY=your_deepgram_key_here
 ```
 
+### 4. Run the Server
+```powershell
+python -m uvicorn backend.server:app --host 0.0.0.0 --port 8000
+```
 
+Open your browser at: **http://localhost:8000**
+
+> **Note:** Grant camera and microphone permissions when prompted. SynthSpeak needs both to function.
+
+### 5. Cloud Deployment (Render.com)
+SynthSpeak ships with a `render.yaml` blueprint for one-click deployment:
+1. Push your code to GitHub.
+2. Log into [Render.com](https://render.com) → **New** → **Blueprint**.
+3. Connect your repo — Render auto-detects the configuration.
+4. Add `NVIDIA_API_KEY` and `DEEPGRAM_API_KEY` as **Environment Variables**.
+5. Click **Deploy** ✅
+
+---
+
+<h1 id="API-Reference">📡 API Reference</h1>
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/` | Serve the main dashboard |
+| `GET` | `/health` | Health check |
+| `POST` | `/start` | Start all AI pipelines |
+| `POST` | `/stop` | Stop all AI pipelines |
+| `POST` | `/manual` | Set a manual topic `{ "topic": "..." }` |
+| `POST` | `/reset` | Reset the current topic |
+| `GET` | `/recordings` | List all saved recordings |
+| `POST` | `/recordings/upload` | Upload a browser recording |
+| `POST` | `/analyze-upload` | Retroactive analysis of a recording |
+| `POST` | `/api/generate-questions-from-resume` | Generate interview questions from resume |
+| `POST` | `/interview/feedback` | Get AI feedback on an interview answer |
+| `WebSocket` | `/ws/stream` | Real-time video + audio streaming |
+
+---
+
+<h1 id="License">📄 License</h1>
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <b>Built with ❤️ using FastAPI • MediaPipe • Deepgram • NVIDIA NIM</b><br/>
+  <sub>SynthSpeak — Because great speakers aren't born, they're coached.</sub>
+</p>
