@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/SynthSpeak-AI%20Coaching%20Platform-blueviolet?style=for-the-badge&logo=microphone&logoColor=white" alt="SynthSpeak Badge"/>
+  <img src="https://img.shields.io/badge/SpeakEasy-AI%20Coaching%20Platform-blueviolet?style=for-the-badge&logo=microphone&logoColor=white" alt="SpeakEasy Badge"/>
 </p>
 
-<h1 align="center">🎙️ SynthSpeak</h1>
+<h1 align="center">🎙️ SpeakEasy</h1>
 
 <p align="center">
   <b>AI-Powered Presentation Coach & Interview Simulator</b><br/>
@@ -38,7 +38,7 @@
 <!-- ║    (https://www.youtube.com/watch?v=VIDEO_ID)                    ║ -->
 <!-- ║                                                                  ║ -->
 <!-- ║  Option 3 — GIF Preview:                                        ║ -->
-<!-- ║    ![SynthSpeak Demo](demo.gif)                                 ║ -->
+<!-- ║    ![SpeakEasy Demo](demo.gif)                                 ║ -->
 <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
 
 <p align="center">
@@ -55,9 +55,9 @@
 
 ---
 
-## 🧐 What is SynthSpeak?
+## 🧐 What is SpeakEasy?
 
-**SynthSpeak** is a real-time AI coaching platform that turns your browser into a professional-grade speaking lab. Whether you're rehearsing a keynote, practicing for a job interview, or simply trying to become a more confident speaker — SynthSpeak watches, listens, and coaches you silently in the background.
+**SpeakEasy** is a real-time AI coaching platform that turns your browser into a professional-grade speaking lab. Whether you're rehearsing a keynote, practicing for a job interview, or simply trying to become a more confident speaker — SpeakEasy watches, listens, and coaches you silently in the background.
 
 No downloads. No installations. Just open the browser, hit **Start**, and begin speaking.
 
@@ -226,8 +226,8 @@ No downloads. No installations. Just open the browser, hit **Start**, and begin 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourname/SynthSpeak.git
-cd SynthSpeak
+git clone https://github.com/yourname/SpeakEasy.git
+cd SpeakEasy
 ```
 
 ### 2. Install Dependencies
@@ -266,13 +266,13 @@ python -m uvicorn backend.server:app --host 0.0.0.0 --port 8000
 
 Navigate to **[http://localhost:8000](http://localhost:8000)** in your browser.
 
-> **Note:** Grant camera and microphone permissions when prompted. SynthSpeak needs both to function.
+> **Note:** Grant camera and microphone permissions when prompted. SpeakEasy needs both to function.
 
 ---
 
 ## ☁️ Cloud Deployment (Render.com)
 
-SynthSpeak ships with a `render.yaml` blueprint for one-click deployment:
+SpeakEasy ships with a `render.yaml` blueprint for one-click deployment:
 
 1. Push your code to a GitHub repository.
 2. Log into [Render.com](https://render.com) → **New** → **Blueprint**.
@@ -285,7 +285,7 @@ SynthSpeak ships with a `render.yaml` blueprint for one-click deployment:
 ## 📂 Project Structure
 
 ```
-SynthSpeak/
+SpeakEasy/
 ├── backend/
 │   ├── server.py              # FastAPI app — routes, WebSocket, REST API
 │   ├── visual_pipeline.py     # MediaPipe face/pose/hand analysis
@@ -355,7 +355,7 @@ apply_preset('high_performance')  # Fastest, lower accuracy (weak hardware)
 
 ---
 
-## 📊 What SynthSpeak Measures
+## 📊 What SpeakEasy Measures
 
 | Dimension | Metrics | How |
 |:---|:---|:---|
@@ -388,5 +388,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 <p align="center">
   <b>Built with ❤️ using FastAPI • MediaPipe • Deepgram • NVIDIA NIM</b><br/>
-  <sub>SynthSpeak — Because great speakers aren't born, they're coached.</sub>
+  <sub>SpeakEasy — Because great speakers aren't born, they're coached.</sub>
 </p>
