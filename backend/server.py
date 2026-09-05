@@ -23,9 +23,9 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPExcepti
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from visual_pipeline import VisualPipeline
-from audio_pipeline import AudioPipeline
-from fusion_layer import FusionLayer, SharedState
+from backend.visual_pipeline import VisualPipeline
+from backend.audio_pipeline import AudioPipeline
+from backend.fusion_layer import FusionLayer, SharedState
 
 import sqlite3
 
