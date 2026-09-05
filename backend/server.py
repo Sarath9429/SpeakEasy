@@ -23,9 +23,9 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPExcepti
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from .visual_pipeline import VisualPipeline
-from .audio_pipeline import AudioPipeline
-from .fusion_layer import FusionLayer, SharedState
+from visual_pipeline import VisualPipeline
+from audio_pipeline import AudioPipeline
+from fusion_layer import FusionLayer, SharedState
 
 import sqlite3
 
@@ -290,8 +290,20 @@ async def on_startup():
     print("📡 WebSocket broadcaster started")
 @app.get("/health")
 async def health_check():
-    """Health check endpoint — Render uses this to confirm the service is alive."""
-    return {"status": "ok", "service": "SynthSpeak Backend"}
+    """
+    Lightweight availability/health-check endpoint for deployment monitoring.
+
+    Intended use: UptimeRobot (or any uptime monitor) sends a GET request to
+    this endpoint every 5 minutes to prevent the Render free-tier web service
+    from spinning down due to inactivity.
+
+    Contract:
+      - Always returns HTTP 200 with {"status": "ok"}.
+      - MUST NOT call any external AI APIs, databases, vector stores, or
+        expensive services — keep it as fast and dependency-free as possible.
+      - MUST NOT expose API keys, secrets, or any sensitive information.
+    """
+    return {"status": "ok"}
 
 
 @app.get("/", response_class=HTMLResponse)

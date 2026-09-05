@@ -74,15 +74,6 @@ class AudioPipeline:
         self.last_saved_file: str | None = None
 
     def feed_audio_chunk(self, raw_bytes: bytes) -> None:
-        """
-        Entry point for browser-streamed audio.
-        Converts the raw PCM float32 chunk to a numpy array and appends it to
-        both the live processing buffer and the session recording accumulator.
-        Topic enforcement is done in JS (Start is blocked without a topic), so
-        we do NOT re-check topic_confirmed here — it would cause the first
-        few seconds of every session to be silently dropped because reset_session()
-        clears topic_confirmed and the `cmd: manual` arrives 500ms later.
-        """
         try:
             arr = np.frombuffer(raw_bytes, dtype=np.float32).reshape(-1, 1)
             with self.buffer_lock:
